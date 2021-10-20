@@ -1,0 +1,22 @@
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <nav class="amado-nav">
+                <h1>Store Entities</h1>
+                <ul class="profile-entities__list">
+                    {{#each list_array}}
+                        <li><a href="{{entityLink}}"><span class="fa fa-angle-right"></span>{{entity}}</a></li>
+                    {{/each}}
+                </ul>
+            </nav>
+        </div>
+        <div class="col-sm-4">
+            <div class="profile">
+                <div class="img">👦</div>
+                <h2>{{{user.name}}}</h2>
+                <span>{{{user.email}}}</span>
+                <a href="./logout">Log Out</a>
+            </div>
+        </div>
+    </div>
+</div>

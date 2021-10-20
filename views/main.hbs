@@ -1,0 +1,21 @@
+<!-- Product Catagories Area Start -->
+<div class="products-catagories-area clearfix">
+    <div class="amado-pro-catagory clearfix">
+        {{#each products_ads}}
+        <!-- Single Catagory -->
+        <div class="single-products-catagory clearfix">
+            <a href="/shop">
+                <img src="{{this.prod_image}}" alt="">
+                <!-- Hover Content -->
+                <div class="hover-content">
+                    <div class="line"></div>
+                    <p>{{this.prod_price}}</p>
+                    <h4>{{this.prod_name}}</h4>
+                </div>
+            </a>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<!-- Product Catagories Area End -->
+
