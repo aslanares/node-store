@@ -4,6 +4,7 @@ const homeRouter    = express.Router();
 const {
     homePage,
     shopPage,
+    discountPage,
     cartPage,
     checkoutPage,
     brandPage,
@@ -15,6 +16,7 @@ const {
 
 homeRouter.get('/', homePage);
 homeRouter.get('/shop', shopPage);
+homeRouter.get('/discount', discountPage);
 homeRouter.get('/cart', cartPage);
 homeRouter.get('/checkout', checkoutPage);
 homeRouter.get('/category/:cat_name', categoryPage);

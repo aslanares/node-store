@@ -16,7 +16,7 @@ exports.profilePage = asyncMiddleware(async (req, res, next) => {
         list_array: [
             {'entity':'Products', 'entityLink':'products'},
             {'entity':'Products Ads', 'entityLink':'products-ads'},
-            {'entity':'Products Category', 'entityLink':'products-category'},
+            {'entity':'Products Category', 'entityLink':'products-cat'},
             {'entity':'Products Brand', 'entityLink':'products-brand'},
         ],
         user: row[0],

@@ -9,7 +9,7 @@ exports.shopPage = asyncMiddleware(async (req, res, next) => {
     const [productList] = await Products.getProducts();
 
     res.render('productsList/products', {
-        title: 'Shop products',
+        title: 'Products List',
         products_list: productList,
     });
 })
@@ -61,7 +61,7 @@ exports.editProductId = asyncMiddleware(async(req, res, next) => {
     const productBrand = await Products.getProductBrand();
     let productBrandToString = JSON.stringify(productBrand[0]);
     let productBrandObject = JSON.parse(productBrandToString);
-    console.log(productObject);
+
     res.render('productsList/edit', {
         title: 'Product edition',
         prod_cat: productCatObject,
@@ -74,7 +74,7 @@ exports.editSingleProduct = asyncMiddleware( async(req, res, next) => {
     if(!req.body) return res.sendStatuc(400);
     const { body } = req;
     const updateSingleProd = new Products(body.id);
-    console.log(body);
+
     updateSingleProd.setSingleProduct(
         body.product_name,
         body.product_desc,

@@ -23,6 +23,20 @@ module.exports = class Home {
         return dbConnection.execute('SELECT * FROM product_brand');
     }
 
+    static getSingleProductDiscount() {
+        return dbConnection.execute(
+          'SELECT prod_name, prod_price, prod_image, prod_gallery ' +
+          'FROM products, product_discount ' +
+          'WHERE products.prod_disc_id = product_discount.id');
+    }
+
+    static getSingleProductDiscountValue() {
+        return dbConnection.execute(
+          'SELECT prod_discount ' +
+          'FROM products, product_discount ' +
+          'WHERE products.prod_disc_id = product_discount.id');
+    }
+
     getSingleProduct() {
         return dbConnection.execute('SELECT * FROM products WHERE id=?', [this._id]);
     }
@@ -30,7 +44,7 @@ module.exports = class Home {
     getSingleProductCategory() {
         return dbConnection.execute(
             'SELECT cat_name FROM products, product_category ' +
-            'WHERE products.id=? and products.prod_cat_id = product_category.id ' +
+            'WHERE products.id = ? and products.prod_cat_id = product_category.id ' +
             'GROUP BY cat_name', [this._id]
         );
     }

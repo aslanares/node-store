@@ -1,5 +1,5 @@
-const express       = require("express")
-const productsRouter    = express.Router();
+const express = require("express")
+const productsRouter = express.Router();
 
 const {
     shopPage,

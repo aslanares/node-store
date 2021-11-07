@@ -10,6 +10,7 @@ module.exports = async (singleTaxonomy, Model) => {
     const [productCategory] = await Model.getProductCategory();
     const [productBrand] = await Model.getProductBrand();
 
+
     let [prodCatToObject, prodBrandToObject] = lowerCatAndBrand(productCategory, productBrand);
     return [prodCatToObject, prodBrandToObject, productCatToObject];
 }

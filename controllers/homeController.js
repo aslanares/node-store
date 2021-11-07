@@ -27,6 +27,27 @@ exports.shopPage = asyncMiddleware(async(req, res, next) => {
     });
 });
 
+exports.discountPage = asyncMiddleware(async(req, res, next) => {
+    const [products_disc] = await Home.getSingleProductDiscount();
+    let shortCatArr = shortCatAndBrand([products_disc], Home);
+
+    let getShortCatArr = await shortCatArr;
+    const products_disc_val = await Home.getSingleProductDiscountValue();
+    let productDiscToString = JSON.stringify(products_disc_val[0]);
+
+    let productDiscToObject = JSON.parse(productDiscToString);
+    for(let disc_id = 0; disc_id < getShortCatArr[2].length; disc_id++) {
+        getShortCatArr[2][disc_id]['prod_disc'] = productDiscToObject[disc_id].prod_discount
+    }
+
+    res.render('discount', {
+        page_title: 'Discount page',
+        categories: await getProductObject(shortCatArr, 0),
+        brands: await getProductObject(shortCatArr, 1),
+        products: await getProductObject(shortCatArr, 2),
+    })
+});
+
 exports.categoryPage = asyncMiddleware( async (req, res, next) => {
     const catName = new Home(req.params.id, req.params.cat_name, req.params.brand_name);
     const singleTaxonomy = await catName.getSingleCategory();

@@ -6,6 +6,9 @@ const hbs                  = require('hbs');
 const userRouter           = require('./routes/userRouter');
 const homeRouter           = require('./routes/homeRouter');
 const productsRouter       = require('./routes/productsRouter');
+const productsAdsRouter    = require('./routes/productsAdsRouter');
+const productsCatRouter    = require('./routes/productsCatRouter');
+const productsBrandRouter  = require('./routes/productsBrandRouter');
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -31,6 +34,9 @@ hbs.registerPartials(__dirname + '/views/partials');
 
 app.use(express.static('public'));
 
+app.use("/admin/products-brand/", productsBrandRouter);
+app.use("/admin/products-cat/", productsCatRouter);
+app.use("/admin/products-ads/", productsAdsRouter);
 app.use("/admin/products/", productsRouter);
 app.use("/admin", userRouter);
 app.use("/", homeRouter);
