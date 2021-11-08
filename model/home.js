@@ -7,6 +7,13 @@ module.exports = class Home {
         this._brandName = brandName;
     }
 
+    setSingleProduct(name, image, price, amount) {
+        this._name     = name;
+        this._image    = image;
+        this._price    = price;
+        this._amount   = amount;
+    }
+
     static getProductsAds() {
         return dbConnection.execute('SELECT * FROM products_ads');
     }
@@ -37,6 +44,10 @@ module.exports = class Home {
           'WHERE products.prod_disc_id = product_discount.id');
     }
 
+    static getProductsCart() {
+        return dbConnection.execute('SELECT * FROM product_cart');
+    }
+
     getSingleProduct() {
         return dbConnection.execute('SELECT * FROM products WHERE id=?', [this._id]);
     }
@@ -64,5 +75,17 @@ module.exports = class Home {
             "WHERE pr.prod_cat_id = pb.id and pb.brand_name = ?", [this._brandName]
         );
 
+    }
+
+    addSingleProductCart() {
+        return dbConnection.execute(
+          'INSERT INTO product_cart ' +
+          '(prod_name, prod_image, prod_price, prod_num) ' +
+          'VALUES (?,?,?,?)', [this._name, this._image, this._price, this._amount]);
+    }
+
+    deleteSingleProductCart() {
+        return dbConnection.execute(
+          'DELETE FROM product_cart WHERE id = ?', [this._id]);
     }
 }

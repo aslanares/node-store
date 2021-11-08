@@ -62,9 +62,52 @@ exports.categoryPage = asyncMiddleware( async (req, res, next) => {
     });
 });
 
-exports.cartPage = asyncMiddleware( async(req, res, next) => {
-    res.render('cart', { page_title: 'Cart'});
+exports.cartPageId = asyncMiddleware( async(req, res, next) => {
+    const productId = new Home(req.params.id, req.params.cat_name, req.params.brand_name);
+    const singleProduct = await productId.getSingleProduct();
+    let productToString = JSON.stringify(singleProduct[0]);
+    let productObject = JSON.parse(productToString);
+
+    productId.setSingleProduct(
+        productObject[0]['prod_name'],
+        productObject[0]['prod_image'],
+        productObject[0]['prod_price'],
+        productObject[0]['prod_num']
+    )
+
+    productId.addSingleProductCart()
+
+    res.render('cart', {
+        title: 'Cart',
+        single_product: productObject
+    });
+
+    res.redirect('/cart');
 });
+
+exports.cartPage = asyncMiddleware( async(req, res, next) => {
+    const getProductCart = await Home.getProductsCart()
+    let productCartToString = JSON.stringify(getProductCart[0]);
+    let productCartToObject = JSON.parse(productCartToString);
+
+    let totalCart = 0;
+    for(let sum_item = 0; sum_item < productCartToObject.length; sum_item++) {
+        totalCart += Number((productCartToObject[sum_item]['prod_price']).substring(1));
+    }
+
+    res.render('cart', {
+        page_title: 'Cart',
+        single_product: productCartToObject,
+        total_cart: totalCart
+    });
+});
+
+exports.deleteProductCart = asyncMiddleware(async(req, res, next) => {
+    const { body } = req;
+    const productId = new Home(req.params.id, req.params.cat_name, req.params.brand_name);
+    await productId.deleteSingleProductCart();
+    res.redirect("/cart");
+})
 
 exports.checkoutPage = asyncMiddleware( async (req, res) => {
     res.render('checkout', { page_title: 'Checkout'});

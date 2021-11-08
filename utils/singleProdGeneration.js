@@ -2,7 +2,6 @@ module.exports = async (req, res, dbConnection, Model) => {
     const home = new Model(req.params.id, req.params.cat_name, req.params.brand_name);
     const singleProduct = await home.getSingleProduct();
     const productCategory = await home.getSingleProductCategory();
-
     let productCatToString = JSON.stringify(productCategory[0][0]);
     let productCatToObject = JSON.parse(productCatToString);
     let productToString = JSON.stringify(singleProduct[0]);
