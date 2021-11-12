@@ -103,7 +103,6 @@ exports.cartPage = asyncMiddleware( async(req, res, next) => {
 });
 
 exports.deleteProductCart = asyncMiddleware(async(req, res, next) => {
-    const { body } = req;
     const productId = new Home(req.params.id, req.params.cat_name, req.params.brand_name);
     await productId.deleteSingleProductCart();
     res.redirect("/cart");

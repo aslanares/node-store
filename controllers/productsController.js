@@ -1,20 +1,16 @@
-const dbConnection         = require("../utils/dbConnection");
-const singleProdGeneration = require('../utils/singleProdGeneration');
-const shortCatAndBrand     = require('../utils/shortCatAndBrand');
-const getProductObject     = require('../utils/getProductObject');
-const asyncMiddleware      = require('../utils/asyncMiddleware');
-const Products             = require('../model/products');
+const asyncMiddleware = require('../utils/asyncMiddleware');
+const Products        = require('../model/products');
 
-exports.shopPage = asyncMiddleware(async (req, res, next) => {
+exports.shopPage = asyncMiddleware(async (req, res) => {
     const [productList] = await Products.getProducts();
 
     res.render('productsList/products', {
         title: 'Products List',
         products_list: productList,
     });
-})
+});
 
-exports.createProduct = asyncMiddleware(async (req, res, next) => {
+exports.createProduct = asyncMiddleware(async (req, res) => {
     const productCat = await Products.getProductCategory();
     let productCatToString = JSON.stringify(productCat[0]);
     let productCatObject = JSON.parse(productCatToString);
@@ -28,9 +24,9 @@ exports.createProduct = asyncMiddleware(async (req, res, next) => {
         prod_cat: productCatObject,
         prod_brand: productBrandObject,
     });
-})
+});
 
-exports.createSingleProduct = asyncMiddleware( async(req, res, next) => {
+exports.createSingleProduct = asyncMiddleware( async(req, res) => {
     if(!req.body) return res.sendStatuc(400);
     const { body } = req;
     const createSingleProd = new Products();
@@ -43,12 +39,12 @@ exports.createSingleProduct = asyncMiddleware( async(req, res, next) => {
         body.product_num,
         body.cat_name,
         body.brand_name,
-    )
+    );
     await createSingleProd.addSingleProduct();
     res.redirect("../products");
-})
+});
 
-exports.editProductId = asyncMiddleware(async(req, res, next) => {
+exports.editProductId = asyncMiddleware(async(req, res) => {
     const productId = new Products(req.params.id);
     const singleProduct = await productId.getSingleProduct();
     let productToString = JSON.stringify(singleProduct[0]);
@@ -67,10 +63,10 @@ exports.editProductId = asyncMiddleware(async(req, res, next) => {
         prod_cat: productCatObject,
         prod_brand: productBrandObject,
         single_product: productObject,
-    })
-})
+    });
+});
 
-exports.editSingleProduct = asyncMiddleware( async(req, res, next) => {
+exports.editSingleProduct = asyncMiddleware( async(req, res) => {
     if(!req.body) return res.sendStatuc(400);
     const { body } = req;
     const updateSingleProd = new Products(body.id);
@@ -84,15 +80,15 @@ exports.editSingleProduct = asyncMiddleware( async(req, res, next) => {
         body.product_num,
         body.cat_name,
         body.brand_name,
-    )
+    );
 
     await updateSingleProd.updateSingleProduct();
     res.redirect("../products");
-})
+});
 
-exports.deleteSingleProduct = asyncMiddleware(async(req, res, next) => {
+exports.deleteSingleProduct = asyncMiddleware(async(req, res) => {
     const { body } = req;
     const getSingleProdId = new Products(req.params.id);
     await getSingleProdId.deleteSingleProduct();
     res.redirect("../../../admin/products");
-})
+});

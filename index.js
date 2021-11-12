@@ -41,9 +41,4 @@ app.use("/admin/products/", productsRouter);
 app.use("/admin", userRouter);
 app.use("/", homeRouter);
 
-// app.use((err, req, res, next) => {
-//     // console.log(err);
-//     return res.send('Internal Server Error');
-// });
-
 app.listen(3000, () => console.log('Server is runngin on port 3000'));

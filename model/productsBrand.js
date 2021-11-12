@@ -9,14 +9,6 @@ module.exports = class ProductsBrand {
         this._name = name;
     }
 
-    static getProductsBrand() {
-        return dbConnection.execute('SELECT id, brand_name FROM product_brand');
-    }
-
-    static getProductBrand() {
-        return dbConnection.execute('SELECT * FROM product_brand');
-    }
-
     getSingleProductBrand() {
         return dbConnection.execute('SELECT id, brand_name FROM product_brand WHERE id = ?', [this._id]);
     }
@@ -34,5 +26,13 @@ module.exports = class ProductsBrand {
     deleteSingleProductBrand() {
         return dbConnection.execute(
             'DELETE FROM product_brand WHERE id = ?', [this._id]);
+    }
+
+    static getProductsBrand() {
+        return dbConnection.execute('SELECT id, brand_name FROM product_brand');
+    }
+
+    static getProductBrand() {
+        return dbConnection.execute('SELECT * FROM product_brand');
     }
 }

@@ -11,12 +11,9 @@ module.exports = class ProductAds {
         this._price    = price;
     }
 
-    static getProductsAds() {
-        return dbConnection.execute('SELECT id, prod_name, prod_image, prod_price FROM products_ads');
-    }
-
     getSingleProductAds() {
-        return dbConnection.execute('SELECT id, prod_name, prod_image, prod_price FROM products_ads WHERE id = ?', [this._id]);
+        return dbConnection.execute('SELECT id, prod_name, prod_image, prod_price ' +
+          'FROM products_ads WHERE id = ?', [this._id]);
     }
 
     addSingleProductAds() {
@@ -34,5 +31,9 @@ module.exports = class ProductAds {
     deleteSingleProductAds() {
         return dbConnection.execute(
             'DELETE FROM products_ads WHERE id = ?', [this._id]);
+    }
+
+    static getProductsAds() {
+        return dbConnection.execute('SELECT id, prod_name, prod_image, prod_price FROM products_ads');
     }
 }

@@ -2,8 +2,8 @@ const { validationResult } = require("express-validator");
 const bcrypt               = require('bcryptjs');
 const asyncMiddleware      = require('../utils/asyncMiddleware');
 const User                 = require('../model/user');
-// Profile Page
-exports.profilePage = asyncMiddleware(async (req, res, next) => {
+
+exports.profilePage = asyncMiddleware(async (req, res) => {
     const userProfile = new User(req.session.userID);
     const [row] = await userProfile.getSingleUser();
 
@@ -23,12 +23,10 @@ exports.profilePage = asyncMiddleware(async (req, res, next) => {
     });
 });
 
-// Register Page
-exports.registerPage = asyncMiddleware((req, res, next) => {
+exports.registerPage = asyncMiddleware((req, res) => {
     res.render("register");
 });
 
-// User Registration
 exports.register = asyncMiddleware(async (req, res, next) => {
     const errors = validationResult(req);
     const { body } = req;
@@ -40,7 +38,6 @@ exports.register = asyncMiddleware(async (req, res, next) => {
     }
 
     try {
-
         const userEmail = new User(req.session.userID, body._name, body._email, '');
         const [row] = await userEmail.getUserEmail();
 
@@ -70,14 +67,11 @@ exports.register = asyncMiddleware(async (req, res, next) => {
     }
 });
 
-// Login Page
-exports.loginPage = asyncMiddleware((req, res, next) => {
+exports.loginPage = asyncMiddleware((req, res) => {
     res.render("login");
 });
 
-// Login User
 exports.login = asyncMiddleware(async (req, res, next) => {
-
     const errors = validationResult(req);
     const { body } = req;
 
@@ -88,7 +82,6 @@ exports.login = asyncMiddleware(async (req, res, next) => {
     }
 
     try {
-
         const userEmail = new User(req.session.userID, body._name, body._email, '');
         const [row] = await userEmail.getUserEmail();
 
@@ -109,10 +102,8 @@ exports.login = asyncMiddleware(async (req, res, next) => {
             error: 'Invalid Password.'
         });
 
-
     }
     catch (e) {
         next(e);
     }
-
 });

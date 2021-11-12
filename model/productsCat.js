@@ -9,14 +9,6 @@ module.exports = class ProductsCat {
         this._name = name;
     }
 
-    static getProductsCat() {
-        return dbConnection.execute('SELECT id, cat_name FROM product_category');
-    }
-
-    static getProductCategory() {
-        return dbConnection.execute('SELECT * FROM product_category');
-    }
-
     getSingleProductCat() {
         return dbConnection.execute('SELECT id, cat_name FROM product_category WHERE id = ?', [this._id]);
     }
@@ -34,5 +26,13 @@ module.exports = class ProductsCat {
     deleteSingleProductCat() {
         return dbConnection.execute(
             'DELETE FROM product_category WHERE id = ?', [this._id]);
+    }
+
+    static getProductsCat() {
+        return dbConnection.execute('SELECT id, cat_name FROM product_category');
+    }
+
+    static getProductBrand() {
+        return dbConnection.execute('SELECT * FROM product_brand');
     }
 }
